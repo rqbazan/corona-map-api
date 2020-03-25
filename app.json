@@ -1,0 +1,11 @@
+{
+  "name": "corona-map-api",
+  "env": {
+    "MONGO_URL": {
+      "required": true
+    },
+    "DATABASE_NAME": {
+      "required": true
+    }
+  }
+}
