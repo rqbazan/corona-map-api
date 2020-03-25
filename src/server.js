@@ -10,6 +10,7 @@ server.use(restify.plugins.queryParser())
 server.use(restify.plugins.fullResponse())
 server.use(helmet())
 server.use(cors())
+server.pre(restify.pre.sanitizePath())
 
 routes(server)
 

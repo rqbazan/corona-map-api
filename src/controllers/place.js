@@ -31,4 +31,21 @@ export class PlaceController {
       res.json({ error: error.message })
     }
   }
+
+  /**
+   * @param {import('restify').Request} req
+   * @param {import('restify').Response} res
+   */
+  async partialUpdate(req, res) {
+    try {
+      const affected = await this.placeModel.updateById({
+        ...req.body,
+        _id: req.params.id
+      })
+
+      res.json({ affected })
+    } catch (error) {
+      res.json({ error: error.message })
+    }
+  }
 }

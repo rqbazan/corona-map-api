@@ -1,3 +1,5 @@
+import { ObjectID } from 'mongodb'
+import { sanitizeObject } from '~/utils/sanitize-object'
 import { getMongoClient } from '~/config/db/mongo'
 
 export class PlaceModel {
@@ -78,7 +80,7 @@ export class PlaceModel {
 
       const operations = places.map(place => ({
         updateOne: {
-          filter: { _id: place._id },
+          filter: { _id: new ObjectID(place._id) },
           update: { $set: place }
         }
       }))
@@ -92,6 +94,41 @@ export class PlaceModel {
       return numOfOperations
     } catch (error) {
       console.error('getSearchablePlaces', error)
+      throw error
+    } finally {
+      client.close()
+    }
+  }
+
+  /**
+   * @param {Place} place
+   * @returns {Promise<number>}
+   */
+  async updateById(place) {
+    const client = getMongoClient()
+
+    try {
+      await client.connect()
+
+      const db = client.db(process.env.DATABASE_NAME)
+
+      const payload = sanitizeObject({
+        searchTemplate: place.searchTemplate,
+        name: place.name,
+        country: place.country,
+        confirmed: place.confirmed,
+        deaths: place.deaths,
+        location: place.location,
+        geojson: place.geojson
+      })
+
+      const { modifiedCount } = await db
+        .collection('places')
+        .updateOne({ _id: new ObjectID(place._id) }, { $set: payload })
+
+      return modifiedCount
+    } catch (error) {
+      console.error('partialUpdate', error)
       throw error
     } finally {
       client.close()

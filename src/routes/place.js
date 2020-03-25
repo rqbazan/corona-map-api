@@ -9,6 +9,8 @@ export default server => {
 
   server.get('/places', controller.getAllPlaces.bind(controller))
 
+  server.patch('/places/:id', controller.partialUpdate.bind(controller))
+
   server.get(
     '/searchable-places',
     controller.getSearchablePlaces.bind(controller)
