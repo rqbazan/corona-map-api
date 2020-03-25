@@ -19,32 +19,22 @@ export class JobWorkerBusiness {
   }
 
   /**
+   * @param {boolean} [force]
    * @returns {Promise<number>}
    */
-  async setGeoJsonToAllSearchablePlaces() {
+  async setGeoJsonToAllSearchablePlaces(force = false) {
     try {
-      const places = await this.getGeoJsonSearchablePlaces()
-      return this.placeModel.bulkUpdate(places)
-    } catch (error) {
-      console.error('setGeoJsonToAllPlaces', error)
-      throw error
-    }
-  }
+      const searchables = await this.placeModel.getSearchablePlaces(force)
 
-  /**
-   * @returns {Promise<GeoJsonSearchablePlace[]>}
-   */
-  async getGeoJsonSearchablePlaces() {
-    try {
-      const places = await this.placeModel.getSearchablePlaces()
-
-      const promises = places.map(
+      const promises = searchables.map(
         this.mapPlaceToGeoJsonSearchablePlace.bind(this)
       )
 
-      return Promise.all(promises)
+      const places = await Promise.all(promises)
+
+      return this.placeModel.bulkUpdate(places)
     } catch (error) {
-      console.error('getGeoJsonSearchablePlaces', error)
+      console.error('setGeoJsonToAllPlaces', error)
       throw error
     }
   }
@@ -60,6 +50,13 @@ export class JobWorkerBusiness {
 
     const data = await this.openStreetMapService.search(term)
 
-    return { ...place, geojson: data?.[0]?.geojson }
+    return {
+      ...place,
+      location: {
+        lat: Number(data?.[0]?.lat),
+        lng: Number(data?.[0]?.lon)
+      },
+      geojson: data?.[0]?.geojson
+    }
   }
 }

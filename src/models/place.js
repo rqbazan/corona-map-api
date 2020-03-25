@@ -27,9 +27,10 @@ export class PlaceModel {
   }
 
   /**
+   * @param {boolean} [force]
    * @returns {Promise<SearchablePlace[]>}
    */
-  async getSearchablePlaces() {
+  async getSearchablePlaces(force = false) {
     const client = getMongoClient()
 
     try {
@@ -43,12 +44,15 @@ export class PlaceModel {
         country: 1
       }
 
+      const withOutGeojsonQuery = {
+        $or: [{ geojson: { $exists: false } }, { geojson: null }]
+      }
+
+      const query = force ? {} : withOutGeojsonQuery
+
       const result = await db
         .collection('places')
-        .find(
-          { $or: [{ geojson: { $exists: false } }, { geojson: null }] },
-          { projection }
-        )
+        .find(query, { projection })
         .toArray()
 
       return result

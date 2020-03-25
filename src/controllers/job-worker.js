@@ -12,7 +12,10 @@ export class JobWorkerController {
    */
   async setGeoJsonToAllSearchablePlaces(req, res) {
     try {
-      const operations = await this.business.setGeoJsonToAllSearchablePlaces()
+      const force = Boolean(req.query.force)
+      const operations = await this.business.setGeoJsonToAllSearchablePlaces(
+        force
+      )
       res.json({ operations })
     } catch (error) {
       res.json({ error: error.message })

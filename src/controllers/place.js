@@ -24,7 +24,8 @@ export class PlaceController {
    */
   async getSearchablePlaces(req, res) {
     try {
-      const places = await this.placeModel.getSearchablePlaces()
+      const force = Boolean(req.query.force)
+      const places = await this.placeModel.getSearchablePlaces(force)
       res.json(places)
     } catch (error) {
       res.json({ error: error.message })

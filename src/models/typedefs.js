@@ -6,6 +6,7 @@
  * @property {string} country
  * @property {number} confirmed
  * @property {number} deaths
+ * @property {LatLng} [location]
  * @property {GeoJSON} [geojson]
  */
 
@@ -23,5 +24,12 @@
  * @property {string} searchTemplate
  * @property {string} name
  * @property {string} country
+ * @property {LatLng} location
  * @property {GeoJSON} geojson
+ */
+
+/**
+ * @typedef LatLng
+ * @property {number} lat
+ * @property {number} lng
  */
