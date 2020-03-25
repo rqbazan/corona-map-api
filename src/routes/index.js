@@ -1,9 +1,11 @@
 // @ts-check
-import mainRoutes from './main'
+import jobWorkerRoutes from './job-worker'
+import placeRoutes from './place'
 
 /**
  * @param server {import('restify').Server}
  */
 export default server => {
-  mainRoutes(server)
+  jobWorkerRoutes(server)
+  placeRoutes(server)
 }

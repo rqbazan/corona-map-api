@@ -1,0 +1,33 @@
+import { PlaceModel } from '~/models/place'
+
+export class PlaceController {
+  constructor(model = new PlaceModel()) {
+    this.placeModel = model
+  }
+
+  /**
+   * @param {import('restify').Request} req
+   * @param {import('restify').Response} res
+   */
+  async getAllPlaces(req, res) {
+    try {
+      const places = await this.placeModel.getAllPlaces()
+      res.json(places)
+    } catch (error) {
+      res.json({ error: error.message })
+    }
+  }
+
+  /**
+   * @param {import('restify').Request} req
+   * @param {import('restify').Response} res
+   */
+  async getSearchablePlaces(req, res) {
+    try {
+      const places = await this.placeModel.getSearchablePlaces()
+      res.json(places)
+    } catch (error) {
+      res.json({ error: error.message })
+    }
+  }
+}
