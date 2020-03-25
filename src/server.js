@@ -1,4 +1,4 @@
-import restify from 'restify'
+import * as restify from 'restify'
 import helmet from 'helmet'
 import cors from 'cors'
 import routes from './routes'

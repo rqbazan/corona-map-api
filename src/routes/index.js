@@ -1,9 +1,9 @@
 // @ts-check
-import basicRoutes from './basic'
+import mainRoutes from './main'
 
 /**
  * @param server {import('restify').Server}
  */
 export default server => {
-  basicRoutes(server)
+  mainRoutes(server)
 }
