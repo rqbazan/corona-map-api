@@ -33,3 +33,10 @@
  * @property {number} lat
  * @property {number} lng
  */
+
+/**
+ * @typedef GeneralMetaInfo
+ * @property {string} _id
+ * @property {Date} lastUpdate
+ * @property {string} slug
+ */
