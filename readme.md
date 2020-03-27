@@ -5,16 +5,16 @@ The REST API Service to manage data about the Coronavirus in Peru. You can see
 
 ## How to setup de project?
 
-1. Run `npm install` to install all the dependencies
+1. Run `yarn` to install all the dependencies
 2. Follow the `.env.example` structure to create your `.env` file
 
 ## How to run the project?
 
-Execute `npm run dev` for development purposes and `npm run start` for a
-production ready environment
+Execute `yarn dev` for development purposes and `yarn start` for a production
+ready environment
 
-> The production environment must has the application build. Run `npm run build`
-> to get it.
+> The production environment must has the application build. Run `yarn build` to
+> get it.
 
 ## What about the information source?
 
