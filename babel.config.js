@@ -21,5 +21,6 @@ module.exports = {
         }
       }
     ]
-  ]
+  ],
+  ignore: ['**/types.d.ts']
 }
