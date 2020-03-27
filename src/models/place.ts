@@ -1,11 +1,9 @@
 import { ObjectID } from 'mongodb'
 import { sanitizeObject } from '~/utils/sanitize-object'
 import { getMongoClient } from '~/config/db/mongo'
+import { Place, SearchablePlace, GeoJsonSearchablePlace } from './types'
 
 export class PlaceModel {
-  /**
-   * @returns Promise<Place>
-   */
   async getAllPlaces() {
     const client = getMongoClient()
 
@@ -15,7 +13,7 @@ export class PlaceModel {
       const db = client.db(process.env.DATABASE_NAME)
 
       const result = await db
-        .collection('places')
+        .collection<Place>('places')
         .find({})
         .toArray()
 
@@ -28,10 +26,6 @@ export class PlaceModel {
     }
   }
 
-  /**
-   * @param {boolean} [force]
-   * @returns {Promise<SearchablePlace[]>}
-   */
   async getSearchablePlaces(force = false) {
     const client = getMongoClient()
 
@@ -53,7 +47,7 @@ export class PlaceModel {
       const query = force ? {} : withOutGeojsonQuery
 
       const result = await db
-        .collection('places')
+        .collection<SearchablePlace>('places')
         .find(query, { projection })
         .toArray()
 
@@ -66,11 +60,7 @@ export class PlaceModel {
     }
   }
 
-  /**
-   * @param {SearchablePlace[]} places
-   * @returns {Promise<number>}
-   */
-  async bulkUpdate(places) {
+  async bulkUpdate(places: GeoJsonSearchablePlace[]) {
     const client = getMongoClient()
 
     try {
@@ -100,11 +90,7 @@ export class PlaceModel {
     }
   }
 
-  /**
-   * @param {Place} place
-   * @returns {Promise<number>}
-   */
-  async updateById(place) {
+  async updateById(place: Place) {
     const client = getMongoClient()
 
     try {

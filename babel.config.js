@@ -7,20 +7,8 @@ module.exports = {
           node: process.versions.node
         }
       }
-    ]
+    ],
+    '@babel/preset-typescript'
   ],
-  plugins: [
-    '@babel/plugin-proposal-class-properties',
-    [
-      'module-resolver',
-      {
-        root: ['.'],
-        alias: {
-          '~': './src'
-        }
-      }
-    ]
-  ],
-  comments: false,
-  ignore: ['**/typedefs.js']
+  plugins: ['@babel/plugin-proposal-class-properties']
 }

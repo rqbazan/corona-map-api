@@ -1,15 +1,14 @@
+import { Response, Request } from 'restify'
 import { MetaInfoModel } from '~/models/meta-info'
 
 export class MetaInfoController {
+  metaInfoModel: MetaInfoModel
+
   constructor(model = new MetaInfoModel()) {
     this.metaInfoModel = model
   }
 
-  /**
-   * @param {import('restify').Request} req
-   * @param {import('restify').Response} res
-   */
-  async getGeneralMetaInfo(req, res) {
+  async getGeneralMetaInfo(req: Request, res: Response) {
     try {
       const metaInfo = await this.metaInfoModel.getGeneralMetaInfo()
       res.json(metaInfo)

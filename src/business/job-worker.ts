@@ -1,34 +1,29 @@
 import template from 'lodash.template'
+import { SearchablePlace, GeoJsonSearchablePlace } from '~/models/types'
 import { PlaceModel } from '~/models/place'
 import { OpenStreetMapService } from '~/services/openstreetmap'
 
 const interpolate = /{{([\s\S]+?)}}/g
 
-/**
- * @param {string} input
- * @returns {(x: any) => string}
- */
-function templateString(input) {
+function templateString(input: string) {
   return template(input, { interpolate })
 }
 
 export class JobWorkerBusiness {
+  placeModel: PlaceModel
+
+  openStreetMapService: OpenStreetMapService
+
   constructor(model = new PlaceModel(), service = new OpenStreetMapService()) {
     this.placeModel = model
     this.openStreetMapService = service
   }
 
-  /**
-   * @param {boolean} [force]
-   * @returns {Promise<number>}
-   */
   async setGeoJsonToAllSearchablePlaces(force = false) {
     try {
       const searchables = await this.placeModel.getSearchablePlaces(force)
 
-      const promises = searchables.map(
-        this.mapPlaceToGeoJsonSearchablePlace.bind(this)
-      )
+      const promises = searchables.map(this.mapPlaceToGeoJsonSearchablePlace)
 
       const places = await Promise.all(promises)
 
@@ -39,11 +34,9 @@ export class JobWorkerBusiness {
     }
   }
 
-  /**
-   * @param {SearchablePlace} place
-   * @return {Promise<GeoJsonSearchablePlace>}
-   */
-  async mapPlaceToGeoJsonSearchablePlace(place) {
+  async mapPlaceToGeoJsonSearchablePlace(
+    place: SearchablePlace
+  ): Promise<GeoJsonSearchablePlace> {
     const getSearchTerm = templateString(place.searchTemplate)
 
     const term = getSearchTerm(place)
