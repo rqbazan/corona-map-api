@@ -1,10 +1,7 @@
-// @ts-check
+import { Server } from 'restify'
 import { PlaceController } from '~/controllers/place'
 
-/**
- * @param server {import('restify').Server}
- */
-export default server => {
+export default (server: Server) => {
   const controller = new PlaceController()
 
   server.get('/places', controller.getAllPlaces.bind(controller))

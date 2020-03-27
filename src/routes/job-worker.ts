@@ -1,10 +1,7 @@
-// @ts-check
+import { Server } from 'restify'
 import { JobWorkerController } from '~/controllers/job-worker'
 
-/**
- * @param server {import('restify').Server}
- */
-export default server => {
+export default (server: Server) => {
   const controller = new JobWorkerController()
 
   server.get(

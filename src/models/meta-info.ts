@@ -1,9 +1,7 @@
 import { getMongoClient } from '~/config/db/mongo'
+import { GeneralMetaInfo } from './types'
 
 export class MetaInfoModel {
-  /**
-   * @returns {Promise<GeneralMetaInfo>}
-   */
   async getGeneralMetaInfo() {
     const client = getMongoClient()
 
@@ -13,7 +11,7 @@ export class MetaInfoModel {
       const db = client.db(process.env.DATABASE_NAME)
 
       const result = await db
-        .collection('meta-info')
+        .collection<GeneralMetaInfo>('meta-info')
         .findOne({ slug: 'general' })
 
       return result

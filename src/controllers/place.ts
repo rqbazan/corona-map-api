@@ -1,15 +1,14 @@
+import { Response, Request } from 'restify'
 import { PlaceModel } from '~/models/place'
 
 export class PlaceController {
+  placeModel: PlaceModel
+
   constructor(model = new PlaceModel()) {
     this.placeModel = model
   }
 
-  /**
-   * @param {import('restify').Request} req
-   * @param {import('restify').Response} res
-   */
-  async getAllPlaces(req, res) {
+  async getAllPlaces(req: Request, res: Response) {
     try {
       const places = await this.placeModel.getAllPlaces()
       res.json(places)
@@ -18,11 +17,7 @@ export class PlaceController {
     }
   }
 
-  /**
-   * @param {import('restify').Request} req
-   * @param {import('restify').Response} res
-   */
-  async getSearchablePlaces(req, res) {
+  async getSearchablePlaces(req: Request, res: Response) {
     try {
       const force = Boolean(req.query.force)
       const places = await this.placeModel.getSearchablePlaces(force)
@@ -32,11 +27,7 @@ export class PlaceController {
     }
   }
 
-  /**
-   * @param {import('restify').Request} req
-   * @param {import('restify').Response} res
-   */
-  async partialUpdate(req, res) {
+  async partialUpdate(req: Request, res: Response) {
     try {
       const affected = await this.placeModel.updateById({
         ...req.body,
