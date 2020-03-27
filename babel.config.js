@@ -10,5 +10,16 @@ module.exports = {
     ],
     '@babel/preset-typescript'
   ],
-  plugins: ['@babel/plugin-proposal-class-properties']
+  plugins: [
+    '@babel/plugin-proposal-class-properties',
+    [
+      'module-resolver',
+      {
+        root: ['.'],
+        alias: {
+          '~': './src'
+        }
+      }
+    ]
+  ]
 }
