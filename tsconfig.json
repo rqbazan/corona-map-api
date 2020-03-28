@@ -2,16 +2,12 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "allowJs": false,
-    "experimentalDecorators": true,
-    "esModuleInterop": true,
     "moduleResolution": "Node",
-    "module": "CommonJS",
-    "target": "ES2017",
-    "outDir": "dist",
-    "rootDir": "src",
+    "target": "ES6",
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
     }
-  }
+  },
+  "exclude": ["dist"]
 }

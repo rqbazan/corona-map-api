@@ -1,5 +1,5 @@
 {
-  "name": "corona-map-api",
+  "name": "es6-template",
   "author": {
     "name": "Ricardo Q. Bazan",
     "email": "raquirozbazan@gmail.com",
@@ -10,18 +10,18 @@
   "main": "dist/index.js",
   "license": "ISC",
   "scripts": {
-    "dev": "tsc-watch --onSuccess \"yarn start:dev\"",
-    "start:dev": "ef-tspm --silent && node -r dotenv/config dist",
+    "dev": "npm run build && run-p watch:*",
     "start": "node dist/index.js",
-    "build": "tsc && ef-tspm",
+    "watch:babel": "babel --watch src --out-dir dist",
+    "watch:nodemon": "nodemon",
+    "build": "babel src --out-dir dist --extensions \".ts,.js\"",
     "lint": "eslint --ignore-path .gitignore --ext=js,ts .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,js,json,md,xml,yml}\"",
     "format": "yarn run prettier --write",
     "check-format": "yarn run prettier --list-different",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc",
     "validate": "run-p check-format check-types lint",
-    "test": "jest",
-    "postinstall": "patch-package"
+    "test": "jest"
   },
   "commitlint": {
     "extends": [
@@ -35,9 +35,13 @@
     }
   },
   "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.8.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-typescript": "^7.9.0",
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "@ef-carbon/tspm": "^2.2.5",
     "@types/jest": "^25.1.4",
     "@types/lodash.isnil": "^4.0.6",
     "@types/lodash.omitby": "^4.6.6",
@@ -47,6 +51,8 @@
     "@types/restify": "^8.4.2",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -58,11 +64,9 @@
     "husky": "^4.2.3",
     "jest": "^25.2.3",
     "lint-staged": "^10.0.8",
+    "nodemon": "^2.0.2",
     "npm-run-all": "^4.1.5",
-    "patch-package": "^6.2.1",
-    "postinstall-postinstall": "^2.1.0",
     "prettier": "^1.19.1",
-    "tsc-watch": "^4.2.3",
     "typescript": "^3.8.3"
   },
   "dependencies": {
@@ -72,7 +76,6 @@
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
     "lodash.template": "^4.5.0",
-    "mikro-orm": "^3.5.2",
     "mongodb": "^3.5.5",
     "restify": "^8.5.1"
   }
