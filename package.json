@@ -12,7 +12,7 @@
   "scripts": {
     "dev": "npm run build && run-p watch:*",
     "start": "node dist/index.js",
-    "watch:babel": "babel --watch src --out-dir dist",
+    "watch:babel": "babel --watch src --out-dir dist --extensions \".ts,.js\"",
     "watch:nodemon": "nodemon",
     "build": "babel src --out-dir dist --extensions \".ts,.js\"",
     "lint": "eslint --ignore-path .gitignore --ext=js,ts .",
