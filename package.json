@@ -19,7 +19,7 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,js,json,md,xml,yml}\"",
     "format": "yarn run prettier --write",
     "check-format": "yarn run prettier --list-different",
-    "check-types": "tsc",
+    "check-types": "tsc --noEmit",
     "validate": "run-p check-format check-types lint",
     "test": "jest"
   },
@@ -76,6 +76,7 @@
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
     "lodash.template": "^4.5.0",
+    "mikro-orm": "^3.5.2",
     "mongodb": "^3.5.5",
     "restify": "^8.5.1"
   }
