@@ -1,7 +1,19 @@
+import { getORMConnector, getORMMiddlewareConnector } from '~/connectors/orm'
 import server from './server'
+import appRoutes from './routes'
 
-const port = process.env.PORT || 4000
+async function main() {
+  const orm = await getORMConnector()
 
-server.listen(port, () => {
-  console.log(`Server running on port ${port}`)
-})
+  server.use(getORMMiddlewareConnector(orm))
+
+  appRoutes(server)
+
+  const port = process.env.PORT || 4000
+
+  server.listen(port, () => {
+    console.log(`Server running port ${port}`)
+  })
+}
+
+main()

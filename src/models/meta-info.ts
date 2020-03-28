@@ -1,4 +1,4 @@
-import { getMongoClient } from '~/config/db/mongo'
+import { getMongoClient } from '~/connectors/mongo'
 import { GeneralMetaInfo } from './types'
 
 export class MetaInfoModel {
