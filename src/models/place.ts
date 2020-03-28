@@ -1,6 +1,6 @@
 import { ObjectID } from 'mongodb'
 import { sanitizeObject } from '~/utils/sanitize-object'
-import { getMongoClient } from '~/config/db/mongo'
+import { getMongoClient } from '~/connectors/mongo'
 import { Place, SearchablePlace, GeoJsonSearchablePlace } from './types'
 
 export class PlaceModel {

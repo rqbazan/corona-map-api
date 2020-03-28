@@ -3,7 +3,8 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": false,
     "moduleResolution": "Node",
-    "target": "ES6",
+    "module": "CommonJS",
+    "target": "ES2017",
     "baseUrl": ".",
     "paths": {
       "~/*": ["src/*"]
