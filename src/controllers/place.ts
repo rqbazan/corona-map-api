@@ -1,35 +1,25 @@
 import { Response, Request } from 'restify'
-import { PlaceModel } from '~/models/place'
+import { PlaceRepository } from '~/repositories/place'
 
 export class PlaceController {
-  placeModel: PlaceModel
+  placeRepository: PlaceRepository
 
-  constructor(model = new PlaceModel()) {
-    this.placeModel = model
+  constructor(repository = new PlaceRepository()) {
+    this.placeRepository = repository
   }
 
-  async getAllPlaces(req: Request, res: Response) {
+  async getAll(req: Request, res: Response) {
     try {
-      const places = await this.placeModel.getAllPlaces()
+      const places = await this.placeRepository.getAll()
       res.json(places)
     } catch (error) {
       res.json({ error: error.message })
     }
   }
 
-  async getSearchablePlaces(req: Request, res: Response) {
+  async updateById(req: Request, res: Response) {
     try {
-      const force = Boolean(req.query.force)
-      const places = await this.placeModel.getSearchablePlaces(force)
-      res.json(places)
-    } catch (error) {
-      res.json({ error: error.message })
-    }
-  }
-
-  async partialUpdate(req: Request, res: Response) {
-    try {
-      const affected = await this.placeModel.updateById({
+      const affected = await this.placeRepository.updateById({
         ...req.body,
         _id: req.params.id
       })

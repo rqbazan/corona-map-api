@@ -1,6 +1,6 @@
 import omitBy from 'lodash.omitby'
 import isNil from 'lodash.isnil'
 
-export function sanitizeObject(object: unknown) {
-  return omitBy(object, isNil)
+export function sanitizeObject<T extends object>(object: T) {
+  return omitBy<T>(object, isNil)
 }
