@@ -12,9 +12,9 @@
   "scripts": {
     "dev": "npm run build && run-p watch:*",
     "start": "node dist/index.js",
-    "watch:babel": "babel --watch src --out-dir dist --extensions \".ts,.js\"",
+    "watch:babel": "babel --watch src --out-dir dist --extensions \".ts,.js\" --copy-files",
     "watch:nodemon": "nodemon",
-    "build": "babel src --out-dir dist --extensions \".ts,.js\"",
+    "build": "babel src --out-dir dist --extensions \".ts,.js\" --copy-files",
     "lint": "eslint --ignore-path .gitignore --ext=js,ts .",
     "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,js,json,md,xml,yml}\"",
     "format": "yarn run prettier --write",

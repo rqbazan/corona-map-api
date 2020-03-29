@@ -1,0 +1,26 @@
+[
+  {
+    "placeSlug": "lima",
+    "deaths": 4,
+    "affected": 307,
+    "createdAt": "2020-03-23T05:00:00.000"
+  },
+  {
+    "placeSlug": "arequipa",
+    "deaths": 7,
+    "affected": 0,
+    "createdAt": "2020-03-23T05:00:00.000"
+  },
+  {
+    "placeSlug": "cusco",
+    "deaths": 6,
+    "affected": 0,
+    "createdAt": "2020-03-23T05:00:00.000"
+  },
+  {
+    "placeSlug": "la-libertad",
+    "deaths": 4,
+    "affected": 0,
+    "createdAt": "2020-03-23T05:00:00.000"
+  }
+]

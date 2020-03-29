@@ -3,6 +3,8 @@
     "allowSyntheticDefaultImports": true,
     "allowJs": false,
     "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "target": "ES6",
     "baseUrl": ".",
     "paths": {

@@ -1,8 +1,8 @@
 /* eslint-disable */
-import { getMongoClient } from '~/connectors/mongo'
+import { useDatabase } from '~/connectors/mongo'
 
 export async function up() {
-  throw Error('not implemented')
+  useDatabase(async db => {})
 }
 
 export async function down() {

@@ -1,0 +1,22 @@
+[
+  {
+    "slug": "lima",
+    "name": "Lima",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "slug": "arequipa",
+    "name": "Arequipa",
+    "searchTemplate": "{{ name }}"
+  },
+  {
+    "slug": "cusco",
+    "name": "Cusco",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "slug": "la-libertad",
+    "name": "La Libertad",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  }
+]
