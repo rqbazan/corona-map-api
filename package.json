@@ -22,7 +22,8 @@
     "check-types": "tsc",
     "validate": "run-p check-format check-types lint",
     "test": "jest",
-    "migrate": "bash ./bin/migrate.sh"
+    "migrate": "bash ./bin/migrate.sh",
+    "migrate:new": "bash ./bin/migrate-new.sh"
   },
   "commitlint": {
     "extends": [
