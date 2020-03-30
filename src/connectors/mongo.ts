@@ -7,13 +7,14 @@ export function getMongoClient() {
   })
 }
 
-export async function useDatabase(
-  callback: (db: Db) => Promise<void>,
+export async function useDatabase<T>(
+  callback: (db: Db) => Promise<T>,
   client = getMongoClient()
 ) {
   try {
     await client.connect()
-    await callback(client.db(process.env.DATABASE_NAME))
+
+    return await callback(client.db(process.env.DATABASE_NAME))
   } finally {
     await client.close()
   }

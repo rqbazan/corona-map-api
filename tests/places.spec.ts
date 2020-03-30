@@ -1,4 +1,7 @@
 import axios from './axios-instance'
+import { checkObjectsRequiredProps } from './helpers'
+
+const requiredProps = ['name', 'searchTemplate', 'slug']
 
 describe('places module', () => {
   it('should return all the places', async () => {
@@ -6,10 +9,6 @@ describe('places module', () => {
 
     expect(res.data).toHaveLength(4)
 
-    res.data.forEach(item => {
-      expect(item).toHaveProperty('name')
-      expect(item).toHaveProperty('searchTemplate')
-      expect(item).toHaveProperty('slug')
-    })
+    checkObjectsRequiredProps(res.data, requiredProps)
   })
 })

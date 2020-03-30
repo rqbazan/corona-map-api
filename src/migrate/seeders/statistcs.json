@@ -3,24 +3,48 @@
     "placeSlug": "lima",
     "deaths": 4,
     "affected": 307,
-    "createdAt": "2020-03-23T05:00:00.000"
+    "createdAt": "2020-03-23T05:00:00.000Z"
   },
   {
     "placeSlug": "arequipa",
-    "deaths": 7,
-    "affected": 0,
-    "createdAt": "2020-03-23T05:00:00.000"
+    "deaths": 0,
+    "affected": 7,
+    "createdAt": "2020-03-23T05:00:00.000Z"
   },
   {
     "placeSlug": "cusco",
-    "deaths": 6,
-    "affected": 0,
-    "createdAt": "2020-03-23T05:00:00.000"
+    "deaths": 0,
+    "affected": 6,
+    "createdAt": "2020-03-23T05:00:00.000Z"
   },
   {
     "placeSlug": "la-libertad",
-    "deaths": 4,
-    "affected": 0,
-    "createdAt": "2020-03-23T05:00:00.000"
+    "deaths": 0,
+    "affected": 4,
+    "createdAt": "2020-03-23T05:00:00.000Z"
+  },
+  {
+    "placeSlug": "lima",
+    "deaths": 6,
+    "affected": 407,
+    "createdAt": "2020-03-24T05:00:00.000Z"
+  },
+  {
+    "placeSlug": "arequipa",
+    "deaths": 0,
+    "affected": 10,
+    "createdAt": "2020-03-24T05:00:00.000Z"
+  },
+  {
+    "placeSlug": "cusco",
+    "deaths": 2,
+    "affected": 16,
+    "createdAt": "2020-03-24T05:00:00.000Z"
+  },
+  {
+    "placeSlug": "la-libertad",
+    "deaths": 1,
+    "affected": 6,
+    "createdAt": "2020-03-24T05:00:00.000Z"
   }
 ]
