@@ -1,4 +1,5 @@
 import { useDatabase } from '~/connectors/mongo'
+import { parseDate } from '~/utils/parse-date'
 import statistics from '../seeders/statistcs.json'
 
 const collectionName = 'statistics'
@@ -6,7 +7,7 @@ const collectionName = 'statistics'
 export async function up() {
   const data = statistics.map(item => ({
     ...item,
-    createdAt: new Date(item.createdAt)
+    createdAt: parseDate(item.createdAt)
   }))
 
   useDatabase(async db => {
