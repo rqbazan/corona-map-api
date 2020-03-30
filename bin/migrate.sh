@@ -1,5 +1,5 @@
 #!/bin/bash
-migrate $* \
-  --migrations-dir './dist/migrate/history' \
-  --store='./dist/migrate/store' \
-  --env
+npx --node-arg '-r dotenv/config' \
+  migrate $* \
+    --migrations-dir './dist/migrate/history' \
+    --store='./dist/migrate/store'
