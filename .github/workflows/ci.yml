@@ -44,4 +44,4 @@ jobs:
         run: yarn migrate up
 
       - name: Testing
-        run: start-server-and-test start http://localhost:4000 test
+        run: yarn start-test start http://localhost:4000 test
