@@ -1,5 +1,5 @@
 #!/bin/bash
-  migrate $* \
+migrate $* \
   --migrations-dir './dist/migrate/history' \
   --store='./dist/migrate/store' \
   --env
