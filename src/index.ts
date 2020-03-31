@@ -1,7 +1,4 @@
 import server from './server'
-import appRoutes from './routes'
-
-appRoutes(server)
 
 const port = process.env.PORT || 4000
 
