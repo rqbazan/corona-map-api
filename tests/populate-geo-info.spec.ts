@@ -1,6 +1,7 @@
 import supertest, { Response } from 'supertest'
 import { useDatabase } from '~/connectors/mongo'
 import server from '~/server'
+import { checkObjectsRequiredProps } from './helpers'
 
 jest.mock('~/services/open-street-map')
 
@@ -24,9 +25,6 @@ describe('jobs module', () => {
 
     expect(res.body).toHaveLength(4)
 
-    res.body.forEach(place => {
-      expect(place.geojson).toBeDefined()
-      expect(place.center).toBeDefined()
-    })
+    checkObjectsRequiredProps(res.body, ['geojson', 'center'])
   })
 })
