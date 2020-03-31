@@ -40,11 +40,5 @@ jobs:
       - name: Migrations
         run: yarn migrate up
 
-      - name: Start server
-        run: nohup yarn start > /dev/null 2>&1 &
-
-      - name: Wait for server
-        run: yarn wait-on http-get://localhost:4000
-
       - name: Testing
         run: yarn test
