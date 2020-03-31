@@ -8,6 +8,19 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    services:
+      database:
+        image: mongo:4.2
+        env:
+          MONGO_INITDB_ROOT_USERNAME: admin
+          MONGO_INITDB_ROOT_PASSWORD: 123456
+        ports:
+          - 27017:27017
+
+    env:
+      MONGO_URL: mongodb://admin:123456@localhost:27017
+      DATABASE_NAME: development
+
     steps:
       - uses: actions/checkout@master
 
@@ -23,6 +36,15 @@ jobs:
 
       - name: Validating
         run: yarn validate
+
+      - name: Migrations
+        run: yarn migrate up
+
+      - name: Start server
+        run: nohup yarn start > /dev/null 2>&1 &
+
+      - name: Wait for server
+        run: yarn wait-on http-get://localhost:4000
 
       - name: Testing
         run: yarn test
