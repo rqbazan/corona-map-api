@@ -31,9 +31,6 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
-      - name: Install SST globally
-        run: npm i -g start-server-and-test
-
       - name: Build
         run: yarn build
 
@@ -43,5 +40,11 @@ jobs:
       - name: Migrations
         run: yarn migrate up
 
+      - name: Start server
+        run: nohup yarn start > /dev/null 2>&1 &
+
+      - name: Wait for server
+        run: wait-on http-get://localhost:4000
+
       - name: Testing
-        run: start-test start http://localhost:4000 test
+        run: yarn test
