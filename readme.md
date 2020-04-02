@@ -1,12 +1,13 @@
 # Corona Map API
 
-The REST API Service to manage data about the Coronavirus in Peru. You can see
-`typedefs.js` files to see the data schemas/interfaces.
+The REST API Service to manage data about the Coronavirus in Peru.
 
 ## How to setup de project?
 
 1. Run `yarn` to install all the dependencies
 2. Follow the `.env.example` structure to create your `.env` file
+3. Run `docker-compose up -d`
+4. Run `yarn migrate up` to populate the local mongodb
 
 ## How to run the project?
 
