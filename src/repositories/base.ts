@@ -1,64 +1,40 @@
 import { ObjectID, FindOneOptions, FilterQuery } from 'mongodb'
 import { sanitizeObject } from '~/utils/sanitize-object'
-import { getMongoClient } from '~/connectors/mongo'
+import { useDatabase } from '~/connectors/mongo'
 
 export class BaseRepository<Entitiy extends Entitiy.Base> {
   collectionName: string
 
   async getAll(query: FilterQuery<Entitiy> = {}, options?: FindOneOptions) {
-    const client = getMongoClient()
-
-    try {
-      await client.connect()
-
-      const db = client.db(process.env.DATABASE_NAME)
-
-      const result = await db
+    return useDatabase(db =>
+      db
         .collection<Entitiy>(this.collectionName)
         .find(query, options)
         .toArray()
-
-      return result
-    } finally {
-      await client.close()
-    }
+    )
   }
 
   async bulkUpdate(items: Entitiy[]) {
-    const client = getMongoClient()
+    const operations = items.map(item => ({
+      updateOne: {
+        filter: { _id: new ObjectID(item._id) },
+        update: { $set: sanitizeObject(item) }
+      }
+    }))
 
-    try {
-      await client.connect()
+    return useDatabase(async db => {
+      const len = operations?.length ?? 0
 
-      const db = client.db(process.env.DATABASE_NAME)
-
-      const operations = items.map(item => ({
-        updateOne: {
-          filter: { _id: new ObjectID(item._id) },
-          update: { $set: sanitizeObject(item) }
-        }
-      }))
-
-      const numOfOperations = operations?.length ?? 0
-
-      if (numOfOperations > 0) {
+      if (len > 0) {
         await db.collection(this.collectionName).bulkWrite(operations)
       }
 
-      return numOfOperations
-    } finally {
-      await client.close()
-    }
+      return len
+    })
   }
 
   async updateById(item: Entitiy) {
-    const client = getMongoClient()
-
-    try {
-      await client.connect()
-
-      const db = client.db(process.env.DATABASE_NAME)
-
+    return useDatabase(async db => {
       const { modifiedCount } = await db
         .collection(this.collectionName)
         .updateOne(
@@ -67,8 +43,6 @@ export class BaseRepository<Entitiy extends Entitiy.Base> {
         )
 
       return modifiedCount
-    } finally {
-      await client.close()
-    }
+    })
   }
 }
