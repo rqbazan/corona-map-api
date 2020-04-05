@@ -1,6 +1,6 @@
 import { useDatabase } from '~/connectors/mongo'
 import { BaseRepository } from '~/modules/base-repository'
-import { startOfDay, endOfDay } from '~/utils/dates'
+import { startOfDay, endOfDay } from '~/utilities/dates'
 
 export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
   static COLLECTION_NAME = 'statistics'

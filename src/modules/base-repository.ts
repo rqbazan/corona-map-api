@@ -1,5 +1,5 @@
 import { ObjectID, FindOneOptions, FilterQuery, ObjectId } from 'mongodb'
-import { sanitizeObject } from '~/utils/sanitize-object'
+import { sanitizeObject } from '~/utilities/sanitize-object'
 import { useDatabase } from '~/connectors/mongo'
 
 export class BaseRepository<Entitiy extends Entitiy.Base> {

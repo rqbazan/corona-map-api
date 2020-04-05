@@ -2,7 +2,7 @@ import { Response, Request } from 'restify'
 import Joi from '@hapi/joi'
 import { StatisticRepository } from './repository'
 import { StatisticBusiness } from './business'
-import { parseDate } from '~/utils/dates'
+import { parseDate } from '~/utilities/dates'
 import {
   createStatisticBodySchema,
   getAllStatisticsQuerySchema
