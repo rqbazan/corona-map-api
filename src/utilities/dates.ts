@@ -8,7 +8,7 @@ export function endOfDay(date: Date) {
     .toDate()
 }
 
-export function parseDate(date: string, pattern = config.DAY_PATTERN) {
+export function parseDateString(date: string, pattern = config.DAY_PATTERN) {
   return moment.tz(date, pattern, config.TZ).toDate()
 }
 

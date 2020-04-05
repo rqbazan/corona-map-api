@@ -2,7 +2,7 @@ import { Response, Request } from 'restify'
 import Joi from '@hapi/joi'
 import { StatisticRepository } from './repository'
 import { StatisticBusiness } from './business'
-import { parseDate } from '~/utilities/dates'
+import { parseDateString } from '~/utilities/dates'
 import {
   createStatisticBodySchema,
   getAllStatisticsQuerySchema
@@ -23,7 +23,7 @@ export class StatisticController {
       Joi.assert(req.query, getAllStatisticsQuerySchema)
 
       const rawCreatedAt = req.query.createdAt
-      const createdAt = rawCreatedAt && parseDate(rawCreatedAt)
+      const createdAt = rawCreatedAt && parseDateString(rawCreatedAt)
 
       const statistics = await this.statisticRepository.getAllByCreatedAt(
         createdAt
