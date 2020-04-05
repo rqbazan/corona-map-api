@@ -1,4 +1,4 @@
-import { ObjectID, FindOneOptions, FilterQuery } from 'mongodb'
+import { ObjectID, FindOneOptions, FilterQuery, ObjectId } from 'mongodb'
 import { sanitizeObject } from '~/utils/sanitize-object'
 import { useDatabase } from '~/connectors/mongo'
 
@@ -80,5 +80,13 @@ export class BaseRepository<Entitiy extends Entitiy.Base> {
         data: result?.[0] as Entitiy
       }
     })
+  }
+
+  async deleteManyByIds(ids: string[]) {
+    return useDatabase(async db =>
+      db.collection(this.collectionName).deleteMany({
+        _id: { $in: ids.map(id => new ObjectId(id)) }
+      })
+    )
   }
 }

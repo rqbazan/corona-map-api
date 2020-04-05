@@ -1,9 +1,6 @@
-import moment from 'moment-timezone'
 import { useDatabase } from '~/connectors/mongo'
-import { startOfDay } from '~/utils/start-of-day'
-import { endOfDay } from '~/utils/end-of-day'
-import { config } from '~/config'
-import { BaseRepository } from './base'
+import { BaseRepository } from '~/modules/base-repository'
+import { startOfDay, endOfDay } from '~/utils/dates'
 
 export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
   static COLLECTION_NAME = 'statistics'
@@ -46,27 +43,5 @@ export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
 
       return result?.[0]?.doc ?? []
     })
-  }
-
-  async insertOne(statistic: Entitiy.Statistic) {
-    const newOne = {
-      ...statistic,
-      createdAt: moment()
-        .tz(config.TZ)
-        .toDate()
-    }
-
-    return super.insertOne(newOne)
-  }
-
-  async insertMany(statistics: Entitiy.Statistic[]) {
-    const newOnes = statistics.map(statistic => ({
-      ...statistic,
-      createdAt: moment()
-        .tz(config.TZ)
-        .toDate()
-    }))
-
-    return super.insertMany(newOnes)
   }
 }

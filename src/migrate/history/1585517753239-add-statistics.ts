@@ -1,5 +1,5 @@
 import { useDatabase } from '~/connectors/mongo'
-import { parseDate } from '~/utils/parse-date'
+import { parseDate } from '~/utils/dates'
 import statistics from '../seeders/statistcs.json'
 
 const collectionName = 'statistics'

@@ -1,15 +1,21 @@
 import { Response, Request } from 'restify'
 import Joi from '@hapi/joi'
-import { StatisticRepository } from '~/repositories/statistic'
-import { parseDate } from '~/utils/parse-date'
-import { createStatisticBodySchema } from '~/validators/create-statistic'
-import { getAllStatisticsQuerySchema } from '~/validators/get-all-statistics'
+import { StatisticRepository } from './repository'
+import { StatisticBusiness } from './business'
+import { parseDate } from '~/utils/dates'
+import {
+  createStatisticBodySchema,
+  getAllStatisticsQuerySchema
+} from './validators'
 
 export class StatisticController {
   statisticRepository: StatisticRepository
 
+  statisticBusiness: StatisticBusiness
+
   constructor(repository = new StatisticRepository()) {
     this.statisticRepository = repository
+    this.statisticBusiness = new StatisticBusiness(repository)
   }
 
   async getAll(req: Request, res: Response) {
@@ -35,9 +41,9 @@ export class StatisticController {
       let result
 
       if (Array.isArray(req.body)) {
-        result = await this.statisticRepository.insertMany(req.body)
+        result = await this.statisticBusiness.insertMany(req.body)
       } else {
-        result = await this.statisticRepository.insertOne(req.body)
+        result = await this.statisticBusiness.insertOne(req.body)
       }
 
       res.json(result)

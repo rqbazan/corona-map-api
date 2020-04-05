@@ -1,12 +1,12 @@
 import _template from 'lodash.template'
-import { PlaceRepository } from '~/repositories/place'
-import { OpenStreetMapService } from '~/services/open-street-map'
+import { PlaceRepository } from './repository'
+import { OpenStreetMapService } from '~/modules/services/open-street-map'
 
 const interpolate = /{{([\s\S]+?)}}/g
 
 const template = (input: string) => _template(input, { interpolate })
 
-export class PopupateGeoInfo {
+export class PlaceBusiness {
   placeRepository: PlaceRepository
 
   openStreetService: OpenStreetMapService
@@ -37,7 +37,7 @@ export class PopupateGeoInfo {
   }
 
   async populateGeoInfo() {
-    const searchables = await this.placeRepository.getAllWithoutGeoJson()
+    const searchables = await this.getAllWithoutGeoJson()
 
     const promises = searchables.map(item =>
       this.mapPlaceToGeoJsonSearchablePlace(item)
@@ -46,5 +46,13 @@ export class PopupateGeoInfo {
     const places = await Promise.all(promises)
 
     return this.placeRepository.bulkUpdate(places)
+  }
+
+  async getAllWithoutGeoJson() {
+    const query = {
+      $or: [{ geojson: { $exists: false } }, { geojson: null }]
+    }
+
+    return this.placeRepository.getAll(query)
   }
 }

@@ -1,5 +1,5 @@
 import { Server } from 'restify'
-import { StatisticController } from '~/controllers/statistic'
+import { StatisticController } from './controller'
 
 export default (server: Server) => {
   const controller = new StatisticController()

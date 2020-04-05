@@ -1,15 +1,18 @@
 import supertest from 'supertest'
 import moment from 'moment'
-import { ObjectId } from 'mongodb'
-import { StatisticRepository } from '~/repositories/statistic'
-import { useDatabase } from '~/connectors/mongo'
+import {
+  checkObjectsRequiredProps,
+  checkObjectRequiredProps
+} from 'tests/helpers'
+import { StatisticRepository } from './repository'
 import server from '~/server'
 import { config } from '~/config'
-import { checkObjectsRequiredProps, checkObjectRequiredProps } from './helpers'
 
 const requiredProps = ['affected', 'deaths', 'placeSlug', 'createdAt']
 
 describe('statistics module', () => {
+  const statisticRepository = new StatisticRepository()
+
   let createdStatisticIds: string[]
 
   beforeEach(() => {
@@ -21,11 +24,7 @@ describe('statistics module', () => {
       return
     }
 
-    await useDatabase(db =>
-      db.collection(StatisticRepository.COLLECTION_NAME).deleteMany({
-        _id: { $in: createdStatisticIds.map(id => new ObjectId(id)) }
-      })
-    )
+    await statisticRepository.deleteManyByIds(createdStatisticIds)
   })
 
   it('should return last statistics', async () => {
@@ -36,8 +35,6 @@ describe('statistics module', () => {
     checkObjectsRequiredProps(res.body, requiredProps)
 
     const createdAt = '2020-03-24'
-
-    console.log(res.body)
 
     res.body.forEach(item => {
       expect(moment(item.createdAt).format(config.DAY_PATTERN)).toBe(createdAt)
