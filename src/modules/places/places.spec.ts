@@ -6,7 +6,7 @@ import { PlaceRepository } from './repository'
 
 const requiredProps = ['name', 'searchTemplate', 'slug']
 
-jest.mock('~/modules/services/open-street-map')
+jest.mock('~/services/open-street-map')
 
 describe('places module', () => {
   it('should return all the places', async () => {

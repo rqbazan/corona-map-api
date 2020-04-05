@@ -1,6 +1,6 @@
 import _template from 'lodash.template'
 import { PlaceRepository } from './repository'
-import { OpenStreetMapService } from '~/modules/services/open-street-map'
+import { OpenStreetMapService } from '~/services/open-street-map'
 
 const interpolate = /{{([\s\S]+?)}}/g
 
