@@ -49,6 +49,7 @@
     "@types/lodash.isnil": "^4.0.6",
     "@types/lodash.omitby": "^4.6.6",
     "@types/lodash.template": "^4.4.6",
+    "@types/moment-timezone": "^0.5.13",
     "@types/mongodb": "^3.5.3",
     "@types/node": "^13.9.1",
     "@types/restify": "^8.4.2",
@@ -78,12 +79,12 @@
   "dependencies": {
     "axios": "^0.19.2",
     "cors": "^2.8.5",
-    "date-fns": "^2.11.1",
-    "date-fns-tz": "^1.0.10",
     "helmet": "^3.21.3",
     "lodash.isnil": "^4.0.0",
     "lodash.omitby": "^4.6.0",
     "lodash.template": "^4.5.0",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "mongodb": "^3.5.5",
     "restify": "^8.5.1"
   }

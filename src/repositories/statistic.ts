@@ -1,6 +1,7 @@
-import { startOfDay, endOfDay } from 'date-fns'
-import { BaseRepository } from './base'
 import { useDatabase } from '~/connectors/mongo'
+import { startOfDay } from '~/utils/start-of-day'
+import { endOfDay } from '~/utils/end-of-day'
+import { BaseRepository } from './base'
 
 export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
   collectionName = 'statistics'
@@ -10,34 +11,34 @@ export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
       const collection = db.collection(this.collectionName)
 
       if (createdAt) {
-        return collection
-          .find({
-            createdAt: {
-              $gte: startOfDay(createdAt),
-              $lt: endOfDay(createdAt)
-            }
-          })
-          .toArray()
+        const findQuery = {
+          createdAt: {
+            $gte: startOfDay(createdAt),
+            $lt: endOfDay(createdAt)
+          }
+        }
+
+        return collection.find(findQuery).toArray()
       }
 
-      const result = await collection
-        .aggregate([
-          {
-            $group: {
-              _id: '$createdAt',
-              doc: { $push: '$$ROOT' }
-            }
-          },
-          {
-            $sort: {
-              createdAt: -1
-            }
-          },
-          {
-            $limit: 1
+      const aggregateQuery = [
+        {
+          $group: {
+            _id: '$createdAt',
+            doc: { $push: '$$ROOT' }
           }
-        ])
-        .toArray()
+        },
+        {
+          $sort: {
+            createdAt: -1
+          }
+        },
+        {
+          $limit: 1
+        }
+      ]
+
+      const result = await collection.aggregate(aggregateQuery).toArray()
 
       return result?.[0]?.doc ?? []
     })

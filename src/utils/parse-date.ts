@@ -1,5 +1,6 @@
-import { toDate } from 'date-fns-tz'
+import moment from 'moment-timezone'
+import { config } from '~/config'
 
-export function parseDate(isoDate: string) {
-  return toDate(isoDate, { timeZone: 'America/Lima' })
+export function parseDate(date: string, pattern = config.DAY_PATTERN) {
+  return moment.tz(date, pattern, config.TZ).toDate()
 }

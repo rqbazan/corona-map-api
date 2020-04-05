@@ -1,7 +1,8 @@
 import { MongoClient, Db } from 'mongodb'
+import { config } from '~/config'
 
 export function getMongoClient() {
-  return new MongoClient(process.env.MONGO_URL, {
+  return new MongoClient(config.MONGO_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -14,7 +15,7 @@ export async function useDatabase<T>(
   try {
     await client.connect()
 
-    return await callback(client.db(process.env.DATABASE_NAME))
+    return await callback(client.db(config.DATABASE_NAME))
   } finally {
     await client.close()
   }

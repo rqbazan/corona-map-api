@@ -1,4 +1,5 @@
 const { getMongoClient } = require('../connectors/mongo')
+const { config } = require('../config')
 
 module.exports = class MongoStore {
   async save(set, onComplete) {
@@ -13,7 +14,7 @@ module.exports = class MongoStore {
       }
 
       await client
-        .db(process.env.DATABASE_NAME)
+        .db(config.DATABASE_NAME)
         .collection('migrations')
         .replaceOne({}, data, { upsert: true })
 
@@ -32,7 +33,7 @@ module.exports = class MongoStore {
       await client.connect()
 
       const data = await client
-        .db(process.env.DATABASE_NAME)
+        .db(config.DATABASE_NAME)
         .collection('migrations')
         .findOne({})
 

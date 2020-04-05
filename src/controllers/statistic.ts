@@ -11,8 +11,8 @@ export class StatisticController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const rawValue = req.query.createdAt
-      const createdAt = rawValue && parseDate(rawValue)
+      const rawCreatedAt = req.query.createdAt
+      const createdAt = rawCreatedAt && parseDate(rawCreatedAt)
 
       const statistics = await this.statisticRepository.getAllByCreatedAt(
         createdAt
