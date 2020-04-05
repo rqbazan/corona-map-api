@@ -1,7 +1,9 @@
 import { BaseRepository } from './base'
 
 export class PlaceRepository extends BaseRepository<Entitiy.Place> {
-  collectionName = 'places'
+  static COLLECTION_NAME = 'places'
+
+  collectionName = PlaceRepository.COLLECTION_NAME
 
   getAllWithoutGeoJson() {
     const query = {

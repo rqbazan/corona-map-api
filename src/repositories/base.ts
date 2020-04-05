@@ -45,4 +45,40 @@ export class BaseRepository<Entitiy extends Entitiy.Base> {
       return modifiedCount
     })
   }
+
+  async insertMany(entities: Entitiy[]) {
+    return useDatabase(async db => {
+      const { insertedIds, insertedCount } = await db
+        .collection(this.collectionName)
+        .insertMany(entities)
+
+      const result = await db
+        .collection(this.collectionName)
+        .find({ _id: { $in: Object.values(insertedIds) } })
+        .toArray()
+
+      return {
+        inserted: insertedCount,
+        data: result as Entitiy[]
+      }
+    })
+  }
+
+  async insertOne(data: Entitiy) {
+    return useDatabase(async db => {
+      const { insertedId, insertedCount } = await db
+        .collection(this.collectionName)
+        .insertOne(data)
+
+      const result = await db
+        .collection(this.collectionName)
+        .find(insertedId)
+        .toArray()
+
+      return {
+        inserted: insertedCount,
+        data: result?.[0] as Entitiy
+      }
+    })
+  }
 }
