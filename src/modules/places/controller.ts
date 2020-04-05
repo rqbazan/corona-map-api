@@ -21,19 +21,6 @@ export class PlaceController {
     }
   }
 
-  async updateById(req: Request, res: Response) {
-    try {
-      const affected = await this.placeRepository.updateById({
-        ...req.body,
-        _id: req.params.id
-      })
-
-      res.json({ affected })
-    } catch (error) {
-      res.json({ error: error.message })
-    }
-  }
-
   async populateGeoInfo(req: Request, res: Response) {
     try {
       const updated = await this.placeBusiness.populateGeoInfo()
