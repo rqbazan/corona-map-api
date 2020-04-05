@@ -5,7 +5,13 @@ import { useDatabase } from '~/connectors/mongo'
 export class BaseRepository<Entitiy extends Entitiy.Base> {
   collectionName: string
 
-  async getAll(query: FilterQuery<Entitiy> = {}, options?: FindOneOptions) {
+  async findOne(query: FilterQuery<Entitiy> = {}, options?: FindOneOptions) {
+    return useDatabase(db =>
+      db.collection<Entitiy>(this.collectionName).findOne(query, options)
+    )
+  }
+
+  async findAll(query: FilterQuery<Entitiy> = {}, options?: FindOneOptions) {
     return useDatabase(db =>
       db
         .collection<Entitiy>(this.collectionName)

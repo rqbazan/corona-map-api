@@ -125,4 +125,36 @@ describe('statistics module', () => {
     expect(res.body.data).toMatchObject(dataToInsert)
     checkObjectsRequiredProps(res.body.data, ['_id'])
   })
+
+  it('should not create when try to set an invalid place slug', async () => {
+    const res = await supertest(server)
+      .post('/statistics')
+      .send({
+        affected: 1,
+        deaths: 12,
+        placeSlug: 'rusia'
+      })
+
+    expect(res.body.error).toContain('rusia')
+  })
+
+  it('should not create when try to set an invalid place slugs', async () => {
+    const res = await supertest(server)
+      .post('/statistics')
+      .send([
+        {
+          affected: 1,
+          deaths: 12,
+          placeSlug: 'la-libertad'
+        },
+        {
+          affected: 1,
+          deaths: 12,
+          placeSlug: 'rusia'
+        }
+      ])
+
+    expect(res.body.error).toContain('rusia')
+    expect(res.body.error).not.toContain('la-libertad')
+  })
 })

@@ -53,6 +53,6 @@ export class PlaceBusiness {
       $or: [{ geojson: { $exists: false } }, { geojson: null }]
     }
 
-    return this.placeRepository.getAll(query)
+    return this.placeRepository.findAll(query)
   }
 }

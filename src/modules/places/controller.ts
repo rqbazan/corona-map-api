@@ -14,7 +14,7 @@ export class PlaceController {
 
   async getAll(req: Request, res: Response) {
     try {
-      const places = await this.placeRepository.getAll()
+      const places = await this.placeRepository.findAll()
       res.json(places)
     } catch (error) {
       res.json({ error: error.message })
