@@ -30,7 +30,7 @@ export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
         },
         {
           $sort: {
-            createdAt: -1
+            _id: -1
           }
         },
         {
