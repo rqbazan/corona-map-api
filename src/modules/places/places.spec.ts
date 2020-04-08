@@ -4,8 +4,6 @@ import { useDatabase } from '~/connectors/mongo'
 import server from '~/server'
 import { PlaceRepository } from './repository'
 
-const requiredProps = ['name', 'searchTemplate', 'slug']
-
 jest.mock('~/services/open-street-map')
 
 describe('places module', () => {
@@ -14,7 +12,7 @@ describe('places module', () => {
 
     expect(res.body).toHaveLength(4)
 
-    checkObjectsRequiredProps(res.body, requiredProps)
+    checkObjectsRequiredProps(res.body, ['name', 'searchTemplate', 'slug'])
   })
 
   describe('populate polygons', () => {
