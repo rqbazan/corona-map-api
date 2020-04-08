@@ -7,15 +7,15 @@ export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
 
   collectionName = StatisticRepository.COLLECTION_NAME
 
-  getAllByCreatedAt(createdAt?: Date) {
+  getAllByReportedAt(reportedAt?: Date) {
     return useDatabase<Entitiy.Statistic[]>(async db => {
       const collection = db.collection(this.collectionName)
 
-      if (createdAt) {
+      if (reportedAt) {
         const findQuery = {
-          createdAt: {
-            $gte: startOfDay(createdAt),
-            $lt: endOfDay(createdAt)
+          reportedAt: {
+            $gte: startOfDay(reportedAt),
+            $lt: endOfDay(reportedAt)
           }
         }
 
@@ -25,7 +25,7 @@ export class StatisticRepository extends BaseRepository<Entitiy.Statistic> {
       const aggregateQuery = [
         {
           $group: {
-            _id: '$createdAt',
+            _id: '$reportedAt',
             doc: { $push: '$$ROOT' }
           }
         },

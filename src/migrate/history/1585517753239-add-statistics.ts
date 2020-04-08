@@ -7,7 +7,7 @@ const collectionName = 'statistics'
 export async function up() {
   const data = statistics.map(item => ({
     ...item,
-    createdAt: parseDateString(item.createdAt)
+    reportedAt: parseDateString(item.reportedAt)
   }))
 
   useDatabase(async db => {

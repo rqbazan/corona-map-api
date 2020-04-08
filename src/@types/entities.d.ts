@@ -7,7 +7,7 @@ declare namespace Entitiy {
     affected: number
     deaths: number
     placeSlug: string
-    createdAt: Date
+    reportedAt: Date
   }
 
   export interface Place extends Base {

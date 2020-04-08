@@ -22,11 +22,11 @@ export class StatisticController {
     try {
       Joi.assert(req.query, getAllStatisticsQuerySchema)
 
-      const rawCreatedAt = req.query.createdAt
-      const createdAt = rawCreatedAt && parseDateString(rawCreatedAt)
+      const rawReportedAt = req.query.reportedAt
+      const reportedAt = rawReportedAt && parseDateString(rawReportedAt)
 
-      const statistics = await this.statisticRepository.getAllByCreatedAt(
-        createdAt
+      const statistics = await this.statisticRepository.getAllByReportedAt(
+        reportedAt
       )
       res.json(statistics)
     } catch (error) {

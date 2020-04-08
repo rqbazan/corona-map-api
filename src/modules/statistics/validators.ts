@@ -6,7 +6,8 @@ const Joi = require('@hapi/joi').extend(require('@hapi/joi-date'))
 export const statisticSchema = Joi.object({
   affected: Joi.number().required(),
   deaths: Joi.number().required(),
-  placeSlug: Joi.string().required()
+  placeSlug: Joi.string().required(),
+  reportedAt: Joi.date().format(config.DAY_PATTERN)
 })
 
 export const createStatisticBodySchema = Joi.alternatives()
@@ -14,5 +15,5 @@ export const createStatisticBodySchema = Joi.alternatives()
   .required()
 
 export const getAllStatisticsQuerySchema = Joi.object({
-  createdAt: Joi.date().format(config.DAY_PATTERN)
+  reportedAt: Joi.date().format(config.DAY_PATTERN)
 })

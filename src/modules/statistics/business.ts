@@ -17,10 +17,17 @@ export class StatisticBusiness {
     this.placeRepository = placeRepository
   }
 
-  appendCreatedAt(statistic: Entitiy.Statistic) {
+  appendReportedAt(statistic: Entitiy.Statistic) {
+    if (statistic.reportedAt) {
+      return {
+        ...statistic,
+        reportedAt: new Date(statistic.reportedAt)
+      }
+    }
+
     return {
       ...statistic,
-      createdAt: moment()
+      reportedAt: moment()
         .tz(config.TZ)
         .toDate()
     }
@@ -35,7 +42,7 @@ export class StatisticBusiness {
       throw Error(`"${statistic.placeSlug}" is not a valid place slug`)
     }
 
-    const newOne = this.appendCreatedAt(statistic)
+    const newOne = this.appendReportedAt(statistic)
 
     return this.statisticRepository.insertOne(newOne)
   }
@@ -62,7 +69,7 @@ export class StatisticBusiness {
       throw Error(`${diff} are not valid place slugs`)
     }
 
-    const newOnes = statistics.map(this.appendCreatedAt)
+    const newOnes = statistics.map(this.appendReportedAt)
 
     return this.statisticRepository.insertMany(newOnes)
   }

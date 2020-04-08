@@ -8,7 +8,7 @@ import { StatisticRepository } from './repository'
 import server from '~/server'
 import { config } from '~/config'
 
-const requiredProps = ['affected', 'deaths', 'placeSlug', 'createdAt']
+const requiredProps = ['affected', 'deaths', 'placeSlug', 'reportedAt']
 
 describe('statistics module', () => {
   const statisticRepository = new StatisticRepository()
@@ -34,35 +34,39 @@ describe('statistics module', () => {
 
     checkObjectsRequiredProps(res.body, requiredProps)
 
-    const createdAt = '2020-03-24'
+    const reportedAt = '2020-03-24'
 
     res.body.forEach(item => {
-      expect(moment(item.createdAt).format(config.DAY_PATTERN)).toBe(createdAt)
+      expect(moment(item.reportedAt).format(config.DAY_PATTERN)).toBe(
+        reportedAt
+      )
     })
   })
 
   it('should return statistics for 2020-03-23', async () => {
-    const createdAt = '2020-03-23'
+    const reportedAt = '2020-03-23'
 
     const res = await supertest(server)
       .get('/statistics')
-      .query({ createdAt })
+      .query({ reportedAt })
 
     expect(res.body).toHaveLength(4)
 
     checkObjectsRequiredProps(res.body, requiredProps)
 
     res.body.forEach(item => {
-      expect(moment(item.createdAt).format(config.DAY_PATTERN)).toBe(createdAt)
+      expect(moment(item.reportedAt).format(config.DAY_PATTERN)).toBe(
+        reportedAt
+      )
     })
   })
 
   it('should return an error when try to query w/o valid format', async () => {
-    const createdAt = '2020/03/23'
+    const reportedAt = '2020/03/23'
 
     const res = await supertest(server)
       .get('/statistics')
-      .query({ createdAt })
+      .query({ reportedAt })
 
     expect(res.body.error).toBeDefined()
   })
@@ -95,6 +99,8 @@ describe('statistics module', () => {
     expect(res.body.data).toMatchObject(dataToInsert)
     checkObjectRequiredProps(res.body.data, ['_id'])
   })
+
+  it.todo('should create on new statistic with specific repotedAt')
 
   it('should create several statistics', async () => {
     const dataToInsert = [
