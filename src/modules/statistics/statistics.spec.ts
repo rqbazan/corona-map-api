@@ -4,6 +4,7 @@ import {
   checkObjectsRequiredProps,
   checkObjectRequiredProps
 } from 'tests/helpers'
+import { parseDateString } from '~/utilities/dates'
 import { StatisticRepository } from './repository'
 import server from '~/server'
 import { config } from '~/config'
@@ -100,7 +101,26 @@ describe('statistics module', () => {
     checkObjectRequiredProps(res.body.data, ['_id'])
   })
 
-  it.todo('should create on new statistic with specific repotedAt')
+  it('should create on new statistic with specific repotedAt', async () => {
+    const reportedAt = '2020-04-01'
+
+    const dataToInsert = {
+      reportedAt,
+      affected: 10,
+      deaths: 32,
+      placeSlug: 'lima'
+    }
+
+    const res = await supertest(server)
+      .post('/statistics')
+      .send(dataToInsert)
+
+    createdStatisticIds = [res.body?.data?._id]
+
+    expect(res.body.data.reportedAt).toBe(
+      parseDateString(reportedAt).toISOString()
+    )
+  })
 
   it('should create several statistics', async () => {
     const dataToInsert = [

@@ -1,0 +1,127 @@
+[
+  {
+    "name": "Amazonas",
+    "slug": "amazonas",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Áncash",
+    "slug": "ancash",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Apurímac",
+    "slug": "apurimac",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Arequipa",
+    "slug": "arequipa",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Ayacucho",
+    "slug": "ayacucho",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Cajamarca",
+    "slug": "cajamarca",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Callao[38]​",
+    "slug": "callao-38",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Cusco",
+    "slug": "cusco",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Huancavelica",
+    "slug": "huancavelica",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Huánuco",
+    "slug": "huanuco",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Ica",
+    "slug": "ica",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Junín",
+    "slug": "junin",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "La Libertad",
+    "slug": "la-libertad",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Lambayeque",
+    "slug": "lambayeque",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Lima",
+    "slug": "lima",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Loreto",
+    "slug": "loreto",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Madre de Dios",
+    "slug": "madre-de-dios",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Moquegua",
+    "slug": "moquegua",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Pasco",
+    "slug": "pasco",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Piura",
+    "slug": "piura",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Puno",
+    "slug": "puno",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "San Martín",
+    "slug": "san-martin",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Tacna",
+    "slug": "tacna",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Tumbes",
+    "slug": "tumbes",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  },
+  {
+    "name": "Ucayali",
+    "slug": "ucayali",
+    "searchTemplate": "Departamento de {{ name }}, Peru"
+  }
+]

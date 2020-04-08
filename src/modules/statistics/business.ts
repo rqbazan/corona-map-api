@@ -1,5 +1,6 @@
 import moment from 'moment-timezone'
 import fp from 'lodash/fp'
+import { parseDateString } from '~/utilities/dates'
 import { config } from '~/config'
 import { PlaceRepository } from '../places/repository'
 import { StatisticRepository } from './repository'
@@ -21,7 +22,7 @@ export class StatisticBusiness {
     if (statistic.reportedAt) {
       return {
         ...statistic,
-        reportedAt: new Date(statistic.reportedAt)
+        reportedAt: parseDateString(statistic.reportedAt.toString())
       }
     }
 
