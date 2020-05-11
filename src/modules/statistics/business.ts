@@ -34,21 +34,7 @@ export class StatisticBusiness {
     }
   }
 
-  async insertOne(statistic: Entitiy.Statistic) {
-    const place = await this.placeRepository.findOne({
-      slug: statistic.placeSlug
-    })
-
-    if (!place) {
-      throw Error(`"${statistic.placeSlug}" is not a valid place slug`)
-    }
-
-    const newOne = this.appendReportedAt(statistic)
-
-    return this.statisticRepository.insertOne(newOne)
-  }
-
-  async insertMany(statistics: Entitiy.Statistic[]) {
+  async assertIfPlacesDoesNotExists(statistics: Entitiy.Statistic[]) {
     const statisticPlaceSlugs = fp.flow(
       fp.uniqBy<Entitiy.Statistic>('placeSlug'),
       fp.map('placeSlug')
@@ -69,9 +55,43 @@ export class StatisticBusiness {
 
       throw Error(`${diff} are not valid place slugs`)
     }
+  }
+
+  async assertIfOnePlaceDoesNotExists(statistic: Entitiy.Statistic) {
+    const place = await this.placeRepository.findOne({
+      slug: statistic.placeSlug
+    })
+
+    if (!place) {
+      throw Error(`"${statistic.placeSlug}" is not a valid place slug`)
+    }
+  }
+
+  async insertOne(statistic: Entitiy.Statistic) {
+    await this.assertIfOnePlaceDoesNotExists(statistic)
+
+    const newOne = this.appendReportedAt(statistic)
+
+    return this.statisticRepository.insertOne(newOne)
+  }
+
+  async insertMany(statistics: Entitiy.Statistic[]) {
+    await this.assertIfPlacesDoesNotExists(statistics)
 
     const newOnes = statistics.map(this.appendReportedAt)
 
     return this.statisticRepository.insertMany(newOnes)
+  }
+
+  async updateMany(statistics: Entitiy.Statistic[]) {
+    await this.assertIfPlacesDoesNotExists(statistics)
+
+    return this.statisticRepository.bulkUpdate(statistics)
+  }
+
+  async updateOne(statistic: Entitiy.Statistic) {
+    await this.assertIfOnePlaceDoesNotExists(statistic)
+
+    return this.statisticRepository.updateById(statistic)
   }
 }

@@ -183,4 +183,78 @@ describe('statistics module', () => {
     expect(res.body.error).toContain('rusia')
     expect(res.body.error).not.toContain('la-libertad')
   })
+
+  it('should update one statistic', async () => {
+    const dataToInsert = {
+      affected: 10,
+      deaths: 32,
+      placeSlug: 'lima',
+      reportedAt: '2020-03-25'
+    }
+
+    let res = await supertest(server)
+      .post('/statistics')
+      .send(dataToInsert)
+
+    createdStatisticIds = [res.body?.data?._id]
+
+    const dataToUpdate = {
+      _id: res.body?.data?._id,
+      ...dataToInsert,
+      affected: 11,
+      deaths: 33
+    }
+
+    res = await supertest(server)
+      .put('/statistics')
+      .send(dataToUpdate)
+
+    expect(res.body.updated).toBe(1)
+    expect(res.body.data).toMatchObject(dataToUpdate)
+  })
+
+  it('should update multiple statistic', async () => {
+    const dataToInsert = [
+      {
+        affected: 10,
+        deaths: 32,
+        placeSlug: 'lima',
+        reportedAt: '2020-03-25'
+      },
+      {
+        affected: 10,
+        deaths: 32,
+        placeSlug: 'lima',
+        reportedAt: '2020-03-26'
+      }
+    ]
+
+    let res = await supertest(server)
+      .post('/statistics')
+      .send(dataToInsert)
+
+    createdStatisticIds = res.body.data.map(item => item._id)
+
+    const dataToUpdate = [
+      {
+        _id: createdStatisticIds[0],
+        ...dataToInsert[0],
+        affected: 101,
+        deaths: 40
+      },
+      {
+        _id: createdStatisticIds[1],
+        ...dataToInsert[1],
+        affected: 100,
+        deaths: 50
+      }
+    ]
+
+    res = await supertest(server)
+      .put('/statistics')
+      .send(dataToUpdate)
+
+    expect(res.body.updated).toBe(2)
+    expect(res.body.data).toMatchObject(dataToUpdate)
+  })
 })

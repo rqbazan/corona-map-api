@@ -39,13 +39,19 @@ export class PlaceBusiness {
   async populateGeoInfo() {
     const searchables = await this.getAllWithoutGeoJson()
 
+    if (!searchables?.length) {
+      return 0
+    }
+
     const promises = searchables.map(item =>
       this.mapPlaceToGeoJsonSearchablePlace(item)
     )
 
     const places = await Promise.all(promises)
 
-    return this.placeRepository.bulkUpdate(places)
+    const result = await this.placeRepository.bulkUpdate(places)
+
+    return result.updated
   }
 
   async getAllWithoutGeoJson() {

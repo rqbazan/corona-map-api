@@ -5,6 +5,7 @@ import { StatisticBusiness } from './business'
 import { parseDateString } from '~/utilities/dates'
 import {
   createStatisticBodySchema,
+  updateStatisticBodySchema,
   getAllStatisticsQuerySchema
 } from './validators'
 
@@ -44,6 +45,24 @@ export class StatisticController {
         result = await this.statisticBusiness.insertMany(req.body)
       } else {
         result = await this.statisticBusiness.insertOne(req.body)
+      }
+
+      res.json(result)
+    } catch (error) {
+      res.json({ error: error.details || error.message })
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      Joi.assert(req.body, updateStatisticBodySchema)
+
+      let result
+
+      if (Array.isArray(req.body)) {
+        result = await this.statisticBusiness.updateMany(req.body)
+      } else {
+        result = await this.statisticBusiness.updateOne(req.body)
       }
 
       res.json(result)

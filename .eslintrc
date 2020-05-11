@@ -19,6 +19,16 @@
   },
   "parser": "@typescript-eslint/parser",
   "rules": {
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "line": {
+          "markers": ["/"]
+        }
+      }
+    ],
+    "@typescript-eslint/triple-slash-reference": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "no-console": "off",
     "import/prefer-default-export": "off",

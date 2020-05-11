@@ -7,4 +7,6 @@ export default (server: Server) => {
   server.get('/statistics', controller.getAll.bind(controller))
 
   server.post('/statistics', controller.create.bind(controller))
+
+  server.put('/statistics', controller.update.bind(controller))
 }

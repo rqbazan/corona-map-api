@@ -21,34 +21,44 @@ export class BaseRepository<Entitiy extends Entitiy.Base> {
   }
 
   async bulkUpdate(items: Entitiy[]) {
-    const operations = items.map(item => ({
+    const operations = items.map(({ _id, ...item }) => ({
       updateOne: {
-        filter: { _id: new ObjectID(item._id) },
+        filter: { _id: new ObjectID(_id) },
         update: { $set: sanitizeObject(item) }
       }
     }))
 
     return useDatabase(async db => {
-      const len = operations?.length ?? 0
+      const { modifiedCount } = await db
+        .collection(this.collectionName)
+        .bulkWrite(operations)
 
-      if (len > 0) {
-        await db.collection(this.collectionName).bulkWrite(operations)
+      const result = await db
+        .collection(this.collectionName)
+        .find({ _id: { $in: items.map(item => new ObjectID(item._id)) } })
+        .toArray()
+
+      return {
+        updated: modifiedCount,
+        data: result as Entitiy[]
       }
-
-      return len
     })
   }
 
-  async updateById(item: Entitiy) {
+  async updateById({ _id, ...item }: Entitiy) {
     return useDatabase(async db => {
+      const query = { _id: new ObjectID(_id) }
+
       const { modifiedCount } = await db
         .collection(this.collectionName)
-        .updateOne(
-          { _id: new ObjectID(item._id) },
-          { $set: sanitizeObject(item) }
-        )
+        .updateOne(query, { $set: sanitizeObject(item) })
 
-      return modifiedCount
+      const result = await db.collection(this.collectionName).findOne(query)
+
+      return {
+        updated: modifiedCount,
+        data: result as Entitiy
+      }
     })
   }
 
