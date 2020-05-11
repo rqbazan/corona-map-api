@@ -22,8 +22,8 @@
     "check-types": "tsc --noEmit",
     "validate": "run-p check-format check-types lint",
     "test": "jest",
-    "migrate": "bash ./bin/migrate.sh",
-    "migrate:new": "bash ./bin/migrate-new.sh",
+    "migrate": "sh ./bin/migrate.sh",
+    "migrate:new": "sh ./bin/migrate-new.sh",
     "migrate:rs": "yarn migrate down && yarn migrate up"
   },
   "commitlint": {

@@ -17,11 +17,11 @@ describe('places module', () => {
 
   describe('populate polygons', () => {
     afterEach(async () => {
-      await useDatabase(db => {
-        return db
+      await useDatabase(db =>
+        db
           .collection(PlaceRepository.COLLECTION_NAME)
           .updateMany({}, { $set: { geojson: null, center: null } })
-      })
+      )
     })
 
     it('should set geoinfo to all the places', async () => {
