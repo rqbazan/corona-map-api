@@ -2,7 +2,8 @@ import supertest from 'supertest'
 import moment from 'moment'
 import {
   checkObjectsRequiredProps,
-  checkObjectRequiredProps
+  checkObjectRequiredProps,
+  impersonate
 } from 'tests/helpers'
 import { parseDateString } from '~/utilities/dates'
 import { StatisticRepository } from './repository'
@@ -29,7 +30,7 @@ describe('statistics module', () => {
   })
 
   it('should return last statistics', async () => {
-    const res = await supertest(server).get('/statistics')
+    const res = await supertest(server).get('/public/statistics')
 
     expect(res.body).toHaveLength(4)
 
@@ -48,7 +49,7 @@ describe('statistics module', () => {
     const reportedAt = '2020-03-23'
 
     const res = await supertest(server)
-      .get('/statistics')
+      .get('/public/statistics')
       .query({ reportedAt })
 
     expect(res.body).toHaveLength(4)
@@ -66,7 +67,7 @@ describe('statistics module', () => {
     const reportedAt = '2020/03/23'
 
     const res = await supertest(server)
-      .get('/statistics')
+      .get('/public/statistics')
       .query({ reportedAt })
 
     expect(res.body.error).toBeDefined()
@@ -75,9 +76,11 @@ describe('statistics module', () => {
   it.each([[undefined], [{}], [[]], [null]])(
     'should return an error when try to create with `%p` as data',
     async data => {
-      const res = await supertest(server)
-        .post('/statistics')
-        .send(data)
+      const res = await impersonate(
+        supertest(server)
+          .post('/private/statistics')
+          .send(data)
+      )
 
       expect(res.body.error).toBeDefined()
     }
@@ -90,9 +93,11 @@ describe('statistics module', () => {
       placeSlug: 'lima'
     }
 
-    const res = await supertest(server)
-      .post('/statistics')
-      .send(dataToInsert)
+    const res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send(dataToInsert)
+    )
 
     createdStatisticIds = [res.body?.data?._id]
 
@@ -111,9 +116,11 @@ describe('statistics module', () => {
       placeSlug: 'lima'
     }
 
-    const res = await supertest(server)
-      .post('/statistics')
-      .send(dataToInsert)
+    const res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send(dataToInsert)
+    )
 
     createdStatisticIds = [res.body?.data?._id]
 
@@ -141,9 +148,11 @@ describe('statistics module', () => {
       }
     ]
 
-    const res = await supertest(server)
-      .post('/statistics')
-      .send(dataToInsert)
+    const res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send(dataToInsert)
+    )
 
     createdStatisticIds = res.body?.data?.map(item => item._id)
 
@@ -153,32 +162,36 @@ describe('statistics module', () => {
   })
 
   it('should not create when try to set an invalid place slug', async () => {
-    const res = await supertest(server)
-      .post('/statistics')
-      .send({
-        affected: 1,
-        deaths: 12,
-        placeSlug: 'rusia'
-      })
+    const res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send({
+          affected: 1,
+          deaths: 12,
+          placeSlug: 'rusia'
+        })
+    )
 
     expect(res.body.error).toContain('rusia')
   })
 
   it('should not create when try to set an invalid place slugs', async () => {
-    const res = await supertest(server)
-      .post('/statistics')
-      .send([
-        {
-          affected: 1,
-          deaths: 12,
-          placeSlug: 'la-libertad'
-        },
-        {
-          affected: 1,
-          deaths: 12,
-          placeSlug: 'rusia'
-        }
-      ])
+    const res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send([
+          {
+            affected: 1,
+            deaths: 12,
+            placeSlug: 'la-libertad'
+          },
+          {
+            affected: 1,
+            deaths: 12,
+            placeSlug: 'rusia'
+          }
+        ])
+    )
 
     expect(res.body.error).toContain('rusia')
     expect(res.body.error).not.toContain('la-libertad')
@@ -192,9 +205,11 @@ describe('statistics module', () => {
       reportedAt: '2020-03-25'
     }
 
-    let res = await supertest(server)
-      .post('/statistics')
-      .send(dataToInsert)
+    let res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send(dataToInsert)
+    )
 
     createdStatisticIds = [res.body?.data?._id]
 
@@ -205,9 +220,11 @@ describe('statistics module', () => {
       deaths: 33
     }
 
-    res = await supertest(server)
-      .put('/statistics')
-      .send(dataToUpdate)
+    res = await impersonate(
+      supertest(server)
+        .put('/private/statistics')
+        .send(dataToUpdate)
+    )
 
     expect(res.body.updated).toBe(1)
     expect(res.body.data).toMatchObject(dataToUpdate)
@@ -229,9 +246,11 @@ describe('statistics module', () => {
       }
     ]
 
-    let res = await supertest(server)
-      .post('/statistics')
-      .send(dataToInsert)
+    let res = await impersonate(
+      supertest(server)
+        .post('/private/statistics')
+        .send(dataToInsert)
+    )
 
     createdStatisticIds = res.body.data.map(item => item._id)
 
@@ -250,9 +269,11 @@ describe('statistics module', () => {
       }
     ]
 
-    res = await supertest(server)
-      .put('/statistics')
-      .send(dataToUpdate)
+    res = await impersonate(
+      supertest(server)
+        .put('/private/statistics')
+        .send(dataToUpdate)
+    )
 
     expect(res.body.updated).toBe(2)
     expect(res.body.data).toMatchObject(dataToUpdate)

@@ -1,0 +1,14 @@
+{
+  "auth:basic": {
+    "statusCode": 401,
+    "message": "Credentials are not valid"
+  },
+  "auth:missing": {
+    "statusCode": 401,
+    "message": "You must send the basic auth credentials"
+  },
+  "unknow": {
+    "statusCode": 500,
+    "message": "Unknow error has occurred"
+  }
+}
