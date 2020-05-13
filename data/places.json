@@ -30,8 +30,8 @@
     "searchTemplate": "Departamento de {{ name }}, Peru"
   },
   {
-    "name": "Callao[38]​",
-    "slug": "callao-38",
+    "name": "Callao",
+    "slug": "callao",
     "searchTemplate": "Departamento de {{ name }}, Peru"
   },
   {
