@@ -1,6 +1,6 @@
 import basicAuth from 'basic-auth'
 import { Request, Response, Next } from 'restify'
-import { ApplicationError } from '~/modules/errors'
+import { ApplicationError, sendControllerError } from '~/modules/errors'
 import { AuthBusiness } from './business'
 
 export class AuthController {
@@ -14,19 +14,24 @@ export class AuthController {
     const path = req.path()
 
     if (path.startsWith('/public')) {
-      return next()
+      next()
+      return
     }
 
-    const credentials = basicAuth(req)
+    try {
+      const credentials = basicAuth(req)
 
-    if (!credentials) {
-      return next(new ApplicationError('auth:missing'))
+      if (!credentials) {
+        throw new ApplicationError('auth:missing')
+      }
+
+      if (!this.business.basicAuth(credentials.name, credentials.pass)) {
+        throw new ApplicationError('auth:basic')
+      }
+
+      next()
+    } catch (error) {
+      sendControllerError(res, error)
     }
-
-    if (!this.business.basicAuth(credentials.name, credentials.pass)) {
-      return next(new ApplicationError('auth:basic'))
-    }
-
-    return next()
   }
 }
