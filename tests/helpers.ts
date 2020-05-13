@@ -14,7 +14,7 @@ export function checkObjectsRequiredProps<T>(items: T[], properties: string[]) {
 }
 
 export function impersonate(test: supertest.Test) {
-  const credentials = `${config.USERNAME}:${config.PASSWORD}`
+  const credentials = `${config.BASIC_AUTH_USERNAME}:${config.BASIC_AUTH_PASSWORD}`
   const encoded = Buffer.from(credentials).toString('base64')
 
   return test.set('authorization', `Basic ${encoded}`)
