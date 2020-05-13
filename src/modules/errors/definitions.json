@@ -7,6 +7,10 @@
     "statusCode": 401,
     "message": "You must send the basic auth credentials"
   },
+  "validation": {
+    "statusCode": 422,
+    "message": "The data schema is invalid"
+  },
   "unknow": {
     "statusCode": 500,
     "message": "Unknow error has occurred"

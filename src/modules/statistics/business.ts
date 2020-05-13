@@ -2,7 +2,8 @@ import moment from 'moment-timezone'
 import fp from 'lodash/fp'
 import { parseDateString } from '~/utilities/dates'
 import { config } from '~/config'
-import { PlaceRepository } from '../places/repository'
+import { PlaceRepository } from '~/modules/places/repository'
+import { ApplicationError } from '~/modules/errors'
 import { StatisticRepository } from './repository'
 
 export class StatisticBusiness {
@@ -53,7 +54,11 @@ export class StatisticBusiness {
       // statisticPlaceSlugs - placeSlugs
       const diff = fp.difference(statisticPlaceSlugs, placeSlugs)
 
-      throw Error(`${diff} are not valid place slugs`)
+      if (diff.length > 1) {
+        throw new ApplicationError(`${diff} are not valid place slugs`)
+      } else {
+        throw new ApplicationError(`${diff} is not a valid place slug`)
+      }
     }
   }
 
@@ -63,7 +68,9 @@ export class StatisticBusiness {
     })
 
     if (!place) {
-      throw Error(`"${statistic.placeSlug}" is not a valid place slug`)
+      throw new ApplicationError(
+        `${statistic.placeSlug} is not a valid place slug`
+      )
     }
   }
 

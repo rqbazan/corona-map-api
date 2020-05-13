@@ -1,8 +1,9 @@
 import { Response, Request } from 'restify'
 import Joi from '@hapi/joi'
+import { parseDateString } from '~/utilities/dates'
+import { sendControllerError } from '~/modules/errors'
 import { StatisticRepository } from './repository'
 import { StatisticBusiness } from './business'
-import { parseDateString } from '~/utilities/dates'
 import {
   createStatisticBodySchema,
   updateStatisticBodySchema,
@@ -31,7 +32,7 @@ export class StatisticController {
       )
       res.json(statistics)
     } catch (error) {
-      res.json({ error: error.details || error.message })
+      sendControllerError(res, error)
     }
   }
 
@@ -49,7 +50,7 @@ export class StatisticController {
 
       res.json(result)
     } catch (error) {
-      res.json({ error: error.details || error.message })
+      sendControllerError(res, error)
     }
   }
 
@@ -67,7 +68,7 @@ export class StatisticController {
 
       res.json(result)
     } catch (error) {
-      res.json({ error: error.details || error.message })
+      sendControllerError(res, error)
     }
   }
 }

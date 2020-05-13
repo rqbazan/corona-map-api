@@ -70,7 +70,8 @@ describe('statistics module', () => {
       .get('/public/statistics')
       .query({ reportedAt })
 
-    expect(res.body.error).toBeDefined()
+    expect(res.status).toBe(422)
+    expect(res.body.message).toBe('The data schema is invalid')
   })
 
   it.each([[undefined], [{}], [[]], [null]])(
@@ -82,7 +83,8 @@ describe('statistics module', () => {
           .send(data)
       )
 
-      expect(res.body.error).toBeDefined()
+      expect(res.status).toBe(422)
+      expect(res.body.message).toBe('The data schema is invalid')
     }
   )
 
@@ -172,7 +174,8 @@ describe('statistics module', () => {
         })
     )
 
-    expect(res.body.error).toContain('rusia')
+    expect(res.status).toBe(500)
+    expect(res.body.message).toBe('rusia is not a valid place slug')
   })
 
   it('should not create when try to set an invalid place slugs', async () => {
@@ -193,8 +196,8 @@ describe('statistics module', () => {
         ])
     )
 
-    expect(res.body.error).toContain('rusia')
-    expect(res.body.error).not.toContain('la-libertad')
+    expect(res.status).toBe(500)
+    expect(res.body.message).toBe('rusia is not a valid place slug')
   })
 
   it('should update one statistic', async () => {
