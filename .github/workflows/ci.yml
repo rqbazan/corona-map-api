@@ -20,6 +20,8 @@ jobs:
     env:
       MONGO_URL: mongodb://admin:123456@localhost:27017
       DATABASE_NAME: development
+      BASIC_AUTH_USERNAME: nine
+      BASIC_AUTH_PASSWORD: 123456
 
     steps:
       - uses: actions/checkout@master
