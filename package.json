@@ -19,7 +19,7 @@
     "prettier": "prettier --ignore-path .gitignore \"**/*.{ts,js,json,md,xml,yml}\"",
     "format": "yarn run prettier --write",
     "check-format": "yarn run prettier --list-different",
-    "check-types": "tsc --noEmit",
+    "check-types": "tsc",
     "validate": "run-p check-format check-types lint",
     "test": "jest",
     "migrate": "sh ./bin/migrate.sh",

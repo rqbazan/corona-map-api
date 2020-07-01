@@ -1,10 +1,12 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "allowJs": false,
+    "allowJs": true,
     "moduleResolution": "Node",
     "esModuleInterop": true,
     "resolveJsonModule": true,
+    "checkJs": true,
+    "noEmit": true,
     "target": "ES6",
     "baseUrl": ".",
     "paths": {
