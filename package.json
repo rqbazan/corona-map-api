@@ -89,7 +89,7 @@
     "cors": "^2.8.5",
     "helmet": "^3.21.3",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "moment-timezone": "^0.5.28",
     "mongodb": "^3.5.5",
     "restify": "^8.5.1",
